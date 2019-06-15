@@ -1,0 +1,17 @@
+string
+foo
+bar
+john
+doe
+fee
+bor
+lorem ipsum ...
+textbox
+answer
+checkable
+example answer
+field
+not an empty field
+completely filled in
+last example field
+this one does not get read in

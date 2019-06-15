@@ -1,0 +1,120 @@
+
+/*copy pasta*/
+body
+{
+
+  /* These are technically the same, but use both */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  -ms-word-break: break-all;
+  /* This is the dangerous one in WebKit, as it breaks things wherever */
+  word-break: break-all;
+  /* Instead use this non-standard one: */
+  word-break: break-word;
+
+  /* Adds a hyphen where the word breaks, if supported (No Blink) */
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+
+}
+/*copy pasta*/
+
+table
+{
+	width: 100%;
+	height: 1000px;
+	
+	font-size: 3.5em;
+	font-weight: bold;
+	text-align: center;
+	color: black;
+	background-color: black;
+	table-layout: fixed;
+}
+
+button
+{
+	width:40%;
+	font-size:2rem;
+	font-weight:bold;
+	color:black;
+	background-color:white;
+	border:0px;
+}
+
+button:hover
+{
+	cursor:pointer;
+}
+
+button:focus
+{
+	outline:0px;
+}
+
+table,tr,td,th
+{
+    border:1px solid black;
+}
+
+td
+{
+	width: 25%;
+	height: 250px;
+	background-color: white;
+	
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+
+td:after {
+	content:'';
+    display: block;
+    margin-bottom: -1000000000000%;
+}
+
+
+/*scroll layout*/
+
+td::-webkit-scrollbar
+{
+	width:10px;
+}
+
+td::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background: rgba(255,255,255,0.3)
+}
+
+/*uploadform*/
+
+#uploadform
+{
+	text-align: center;
+	width:95%;
+	padding: 2%;
+	font-size: 3.5em;
+}
+
+#premade
+{
+	border: 2px dashed #bbb;
+    border-radius: 5px;
+    padding: 2%;
+    color: #bbb;
+}
+
+#fileInfo
+{
+	font-weight:bold;
+	font-size: 2rem;
+}
+
+html {
+  scroll-behavior: smooth;
+}
