@@ -5,42 +5,34 @@ beauty additions
 	-add winning sound
 */
 
-var Id;
-var Word;
-var colorUnchecked = "black";
-var colorChecked = "white";
-var bgColorUnchecked = "white";
-var bgColorChecked = "black";
+//{ variables
+const colorUnchecked = "black";
+const colorChecked = "white";
+const bgColorUnchecked = "white";
+const bgColorChecked = "black";
 const ROWS = 4;
 const COLS = 4;
 
 window.onload = setup();
+//}
 
+//{setup
 function setup()
 {
 	addTable();
 	
-	//eventlistners
-	var editbtnArray = [];
-	var checkbtnArray = [];
-	var hoverArray = [];
 	var counter = 0; 
 	for(var i = 0; i < ROWS; i++){
 		for(var j = 0; j < COLS; j++){
-			editbtnArray.push(document.getElementById("edit" + i + j));
-			checkbtnArray.push(document.getElementById("check" + i + j));
-			hoverArray.push(document.getElementById("field" + i + j));
-			
-			editbtnArray[counter].addEventListener("click", NewWord, false);	
-			checkbtnArray[counter].addEventListener("click", CheckField, false);
+			document.getElementById("edit" + i + j).addEventListener("click", NewWord, false);	
+			document.getElementById("check" + i + j).addEventListener("click", CheckField, false);
 			
 			document.getElementById('field' + i + j ).onmouseover = function() {
 				var objDiv = document.getElementById(this.id);
 				objDiv.scrollTop = objDiv.scrollHeight;
 			}
 			
-
-			document.getElementById('field' + i + j ).onmouseleave = function() {
+			document.getElementById('field' + i + j ).onmouseleave = async function() {
 				var myDiv = document.getElementById(this.id);
 				myDiv.scrollTo(0, 0);
 			}
@@ -56,19 +48,18 @@ function setup()
 }
 
 function addTable() {
-  var myTableDiv = document.getElementById("gameTable");
+  var gameTable = document.getElementById("gameTable");
 
-  var table = document.createElement('TABLE');
+  var table = document.createElement('table');
 
-  var tableBody = document.createElement('TBODY');
+  var tableBody = document.createElement('tbody');
   table.appendChild(tableBody);
 
   for (var i = 0; i < ROWS; i++) {
-    var tr = document.createElement('TR');
+    var tr = document.createElement('tr');
     tableBody.appendChild(tr);
     for (var j = 0; j < COLS; j++) {
-      var td = document.createElement('TD');
-      //td.appendChild(document.createTextNode("Cell " + i + "," + j));
+      var td = document.createElement('td');
 	  td.setAttribute('id', 'field' + i + j);
 	  
 	  var word = document.createElement('div');
@@ -90,16 +81,21 @@ function addTable() {
       tr.appendChild(td);
     }
   }
-  myTableDiv.appendChild(table);
+  gameTable.appendChild(table);
 }
 
+//}
+
+//{basic bingo
 function NewWord()
 {
 	var temp = this.id;
 	var ID = temp.substr(temp.length - 2)
 	var result = "word" + ID;
-	var word = prompt("Word for bingo: (field" + ID + ")", document.getElementById(result).innerHTML);
-	document.getElementById(result).innerHTML = word;
+	var word = prompt("Word for bingo: (field" + ID + ")", document.querySelector('#' + result).innerHTML);
+	
+	document.querySelector('#'+ result).innerHTML = word
+	//document.getElementById(result).innerHTML = word;
 }
 
 function CheckField()
@@ -133,7 +129,9 @@ function CheckField()
 		document.getElementById(check).innerHTML = "check";
 	}
 }
+//}
 
+//{file upload
 function DragFile(evt)
 {
 	evt.preventDefault();
@@ -146,14 +144,12 @@ function DropFile(evt)
 	
 	var files = evt.dataTransfer.files; // get all files (not sure how to block multiple files)
 	var file = files[0];// take first file from list
-	document.getElementById("fileInfo").innerHTML = file.name + " " + file.size + " bytes ( "+ file.type + " last modified " + file.lastModifiedDate + " )"; // show unnesecairy info just because
+	document.getElementById("fileInfo").innerHTML = file.name + " " + file.size + " bytes ( "+ file.type + " last modified " + file.lastModifiedDate + " )"; // show unnesecairy fileinfo 
 
-	var reader = new FileReader();// some strange js function to read files
-	
-	//internet copy pasta magic
+	var reader = new FileReader();
+
 	reader.onload = function(progressEvent)
 	{
-		//here my programming starts again
 	var lines = this.result.split('\n');
 		for(var line = 0; line < lines.length; line++)
 		{
@@ -174,3 +170,4 @@ function LoadWord(Id, Word)
 	var result = "word" + Id;
 	document.getElementById(result).innerHTML = Word;
 }
+//}
