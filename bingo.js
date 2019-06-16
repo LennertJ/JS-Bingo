@@ -10,6 +10,8 @@ const colorUnchecked = "black";
 const colorChecked = "white";
 const bgColorUnchecked = "white";
 const bgColorChecked = "black";
+
+//all colls or rows over 10 will be ignored
 const ROWS = 4;
 const COLS = 4;
 
@@ -89,6 +91,7 @@ function addTable() {
 //{basic bingo
 function NewWord()
 {
+	if(temp.length > "edit00".length){return;}
 	var temp = this.id;
 	var ID = temp.substr(temp.length - 2)
 	var result = "word" + ID;
@@ -101,6 +104,8 @@ function NewWord()
 function CheckField()
 {
 	var temp = this.id;
+	if(temp.length > "check00".length){return;}
+	
 	var ID = temp.substr(temp.length - 2)
 	
 	var result = "field" + ID;
