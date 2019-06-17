@@ -1,6 +1,6 @@
 /*TO DO
 Functional additions
-	-add win checker
+	-add  wordcounter
 beauty additions
 	-add winning sound
 */
@@ -15,6 +15,8 @@ const bgColorChecked = "black";
 const ROWS = 4;
 const COLS = 4;
 
+var filledInFields = [];
+
 window.onload = setup();
 //}
 
@@ -22,10 +24,12 @@ window.onload = setup();
 function setup()
 {
 	addTable();
-	
 	var counter = 0; 
+	
 	for(var i = 0; i < ROWS; i++){
+		filledInFields.push(new Array());
 		for(var j = 0; j < COLS; j++){
+			filledInFields[i].push(0);
 			document.getElementById("edit" + i + j).addEventListener("click", NewWord, false);	
 			document.getElementById("check" + i + j).addEventListener("click", CheckField, false);
 			
@@ -68,12 +72,12 @@ function addTable() {
 	  word.setAttribute('id','word' + i + j );
 	  
 	  var edit = document.createElement('button');
-	  edit.appendChild(document.createTextNode('edit'));
+	  edit.appendChild(document.createTextNode('✏️'));
 	  edit.setAttribute('id', 'edit' + i + j);
 	  
 	  var check = document.createElement('button');
 	  check.setAttribute('id', 'check' + i + j);
-	  check.appendChild(document.createTextNode('check'));
+	  check.appendChild(document.createTextNode('✔'));
 
 	  td.appendChild(word);
 	  td.appendChild(document.createElement('br'));
@@ -91,8 +95,9 @@ function addTable() {
 //{basic bingo
 function NewWord()
 {
-	if(temp.length > "edit00".length){return;}
 	var temp = this.id;
+	if(temp.length > "edit00".length){return;}
+	
 	var ID = temp.substr(temp.length - 2)
 	var result = "word" + ID;
 	var word = prompt("Word for bingo: (field" + ID + ")", document.querySelector('#' + result).innerHTML);
@@ -107,13 +112,17 @@ function CheckField()
 	if(temp.length > "check00".length){return;}
 	
 	var ID = temp.substr(temp.length - 2)
+	var row= ID.charAt(0);
+	var col= ID.charAt(1);
 	
 	var result = "field" + ID;
 	var edit = "edit" + ID;
 	var check = "check" + ID;
 
+	filledInFields[row][col] -= 1;
+	filledInFields[row][col] *=-1;
 	
-	if (document.getElementById(check).innerHTML == "check")
+	if (document.getElementById(check).innerHTML == "✔")
 	{
 		document.getElementById(result).style.color = colorChecked ;
 		document.getElementById(result).style.backgroundColor= bgColorChecked;
@@ -121,7 +130,7 @@ function CheckField()
 		document.getElementById(edit).style.backgroundColor= bgColorChecked;
 		document.getElementById(check).style.color = colorChecked ;
 		document.getElementById(check).style.backgroundColor= bgColorChecked;
-		document.getElementById(check).innerHTML = "uncheck";
+		document.getElementById(check).innerHTML = "❌";
 	}
 	else
 	{
@@ -131,8 +140,41 @@ function CheckField()
 		document.getElementById(edit).style.backgroundColor= bgColorUnchecked ;
 		document.getElementById(check).style.color = colorUnchecked;
 		document.getElementById(check).style.backgroundColor =  bgColorUnchecked;
-		document.getElementById(check).innerHTML = "check";
+		document.getElementById(check).innerHTML = "✔";
 	}
+	CheckForLine(row, col);
+}
+
+function CheckForLine(row, col){
+	var horbingo = 0; //not used but might be useful in the future
+	var verbingo = 0;
+	var latbingo = 0; 
+	
+	for( var i = 0; i < COLS; i++){
+		if (filledInFields[row][i]!=1){break;}		
+		if (i == COLS - 1){horbingo=1; alert('bingo!')}
+	}
+	
+	for( var i = 0; i< ROWS; i++){
+		if (filledInFields[i][col]!=1){break;}		
+		if (i == ROWS - 1){verbingo=1; alert('bingo!')}
+	}
+	
+	if( ROWS == COLS){//check for diagonal
+		if((row == col)){
+			for( var i = 0; i < ROWS; i++){
+				if (filledInFields[i][i]!=1){break;}		
+				if (i == ROWS - 1){horbingo=1; alert('bingo!')}
+			}
+		}
+
+		else if ((1 + row * 1 + col * 1) == ROWS ){
+			for( var i = 0; i < ROWS; i++){
+				if (filledInFields[i][ROWS - 1 - i]!=1){break;}		
+				if (i == ROWS - 1){horbingo=1; alert('bingo!')}
+			}
+		}
+	} 
 }
 //}
 
